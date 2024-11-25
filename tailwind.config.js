@@ -8,14 +8,23 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Open Sans"'],
-        sansing: ['"Open Sans","sans-serif"'],
+        sansing: ['"Open Sans", "sans-serif"'],
         manrope: ['Manrope', 'sans-serif'],
-        helveticaLight: ['"Helvetica Neue-Light"', 'Arial', 'sans-serif','Manrope'], 
+        helveticaLight: ['"Helvetica Neue-Light"', 'Arial', 'sans-serif', 'Manrope'], 
         montserrat: ['Montserrat', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
-        raleway: ['Raleway', 'sans-serif'],// yahan Open Sans ko sans font mein add kiya
+        raleway: ['Raleway', 'sans-serif'], // Adding Open Sans to sans font family
       },
-    },
+      animation: {
+        marquee: 'marquee 10s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      }, // Close the keyframes object
+    }, // Close the extend object
   },
   plugins: [],
 }

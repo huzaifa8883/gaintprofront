@@ -92,7 +92,7 @@ import CryptoMarket from './cryptomarket';
       <div className="relative w-full h-full overflow-hidden">
         <div className="absolute w-full h-full animate-marquee">
           <p className="whitespace-nowrap font-bold text-[16px] text-[#4f46e5] font-manrope">
-            GainPro - KT Dev Trading Demo &nbsp;•&nbsp; GainPro - KT Dev Trading Demo &nbsp;•&nbsp;
+            GainPro - KT Dev Trading Demo 
           </p>
         </div>
       </div>
@@ -108,7 +108,7 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover border-blue-500"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-yellow-300">
+    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">
   Deposit
 </p>
 
@@ -126,7 +126,7 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-yellow-300">Withdraw</p>
+    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">Withdraw</p>
   </div>
 
   {/* Third Div - Help & Support */}
@@ -138,7 +138,7 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-yellow-300">Help & Support</p>
+    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">Help & Support</p>
   </div>
 
   {/* Fourth Div - About Us */}
@@ -150,7 +150,7 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-yellow-300">About Us</p>
+    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">About Us</p>
   </div>
 
   {/* Fifth Div - App Download */}
@@ -166,7 +166,7 @@ import CryptoMarket from './cryptomarket';
   </div> */}
 </div>
 <div
-  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-hidden -mt-[600px] border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden w-full max-w-[400px] ${
+  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-[600px] border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden w-full max-w-[400px] ${
     toggleform ? 'show mx-0' : ''
   }`}
   style={{ overflowY: 'auto' }}
@@ -249,33 +249,90 @@ import CryptoMarket from './cryptomarket';
 </div>
 <div className="flex justify-center items-center space-x-6 p-6">
   {/* First Div */}
-  <div className="flex flex-col items-center w-[400px] bg-gradient-to-r from-purple-500 to-white rounded-lg shadow-lg p-6">
-    <p className="text-xl font-bold text-purple-800 mb-4">Trading</p>
+  <div className="flex flex-col items-center w-[350px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-lg shadow-xl p-6 hover:scale-105 transform transition-all duration-300">
+    <p className="text-xl font-semibold text-white mb-4">Trading</p>
     <img
       src={image2}
       alt="Trading"
-      className="h-32 w-32 rounded-md object-cover mb-4"
+      className="h-32 w-32 rounded-full border-4 border-white shadow-lg mb-4"
     />
-    <p className="text-center text-base text-gray-700">
-      Automatic Trading 
+    <p className="text-center text-lg text-gray-200">
+      Automatic Trading
     </p>
   </div>
 
   {/* Second Div */}
-  <div className="flex flex-col items-center w-[400px] bg-gradient-to-r from-purple-500 to-white rounded-lg shadow-lg p-6">
-    <p className="text-xl font-bold text-purple-800 mb-4">Reward</p>
+  <div className="flex flex-col items-center w-[350px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-lg shadow-xl p-6 hover:scale-105 transform transition-all duration-300">
+    <p className="text-xl font-semibold text-white mb-4">Reward</p>
     <img
       src={image1}
       alt="Reward"
-      className="h-32 w-32 rounded-md object-cover mb-4"
+      className="h-32 w-32 rounded-full border-4 border-white shadow-lg mb-4"
     />
-    <p className="text-center text-base text-gray-700">
+    <p className="text-center text-lg text-gray-200">
       Daily Check-In System
     </p>
   </div>
 </div>
 
+
 <CryptoMarket/>
+<div className="p-6 bg-purple-400 text-white rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 font-helveticaLight text-center">Hot Game</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="relative flex flex-col items-center bg-gray-800 rounded-lg overflow-hidden">
+          {/* Main image */}
+          <div className="w-full h-60 relative">
+            <img
+              src="https://www.betcasn.com/images/games/game1_bg.webp" // Replace with actual image URL
+              alt="Oishi Delight"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            {/* Profile inside the image */}
+            <div className="absolute top-4 left-4 w-16 h-16 rounded-full border-4 border-white overflow-hidden">
+              <img
+                src="https://www.betcasn.com/images/games/game1.webp" // Replace with actual profile image
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          {/* Game details */}
+          <div className="p-4 text-center text-white font-manrope">
+            <h3 className="text-2xl font-semibold">Oishi Delight</h3>
+            <p className="text-lg mt-2">A delicious adventure in every bite!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="p-6 bg-purple-400 text-white rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 font-helveticaLight text-center">Featured Game</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="relative flex flex-col items-center bg-gray-800 rounded-lg overflow-hidden">
+          {/* Main image */}
+          <div className="w-full h-60 relative">
+            <img
+              src="https://www.betcasn.com/images/games/game6_bg.webp" // Replace with actual image URL
+              alt="Futebol Fever"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            {/* Profile inside the image */}
+            <div className="absolute top-4 left-4 w-16 h-16 rounded-full border-4 border-white overflow-hidden">
+              <img
+                src="https://www.betcasn.com/images/games/game6.webp" // Replace with actual profile image
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          {/* Game details */}
+          <div className="p-4 text-center text-white font-manrope">
+            <h3 className="text-2xl font-semibold">Futebol Fever</h3>
+            <p className="text-lg mt-2">Experience the excitement of football!</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>
 
