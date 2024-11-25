@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 1s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 1s ease-in forwards;
+  }
+   */
+
+   .backing {
+    /* Start off-screen */
+    
+     /* background-color: #3a3b3c; */
+     transform: translateX(-100%); /* Start off-screen */
+     transition: transform 0.3s ease-in-out;
+   }
+   
+   .backing.show {
+     transform: translateX(0); /* Move into view */
+   }
+
+   .glass-effect {
+    background: rgba(255, 255, 255, 0.3); /* Transparent white */
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-radius: 10px; /* Rounded edges for aesthetics */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Glass-like border */
+  }
+  
