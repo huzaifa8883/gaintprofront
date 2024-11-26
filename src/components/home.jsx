@@ -108,9 +108,11 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover border-blue-500"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">
-  Deposit
-</p>
+    <div className="bg-gray-200 p-2 rounded-md shadow-md h-auto">
+  <p className="text-center text-[15px] font-semibold font-sansing text-teal-600">
+    Deposit
+  </p>
+</div>
 
 
 
@@ -126,7 +128,12 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">Withdraw</p>
+    <div className="bg-gray-200 p-2 rounded-md shadow-md h-auto">
+  <p className="text-center text-[15px] font-semibold font-sansing text-teal-600">
+    Withdraw
+  </p>
+</div>
+
   </div>
 
   {/* Third Div - Help & Support */}
@@ -138,7 +145,14 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">Help & Support</p>
+    <div className="bg-gray-200 p-2 rounded-md shadow-md h-auto">
+  <p className="text-center text-[15px] font-semibold font-sansing text-teal-600">
+    Support
+  </p>
+</div>
+
+
+
   </div>
 
   {/* Fourth Div - About Us */}
@@ -150,7 +164,12 @@ import CryptoMarket from './cryptomarket';
         className="h-full w-full object-cover"
       />
     </div>
-    <p className="text-center text-[15px] font-semibold font-sansing text-pink-500">About Us</p>
+    <div className="bg-gray-200 p-2 rounded-md shadow-md h-auto">
+  <p className="text-center text-[15px] font-semibold font-sansing text-teal-600">
+    AboutUs
+  </p>
+</div>
+
   </div>
 
   {/* Fifth Div - App Download */}
@@ -166,7 +185,7 @@ import CryptoMarket from './cryptomarket';
   </div> */}
 </div>
 <div
-  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-[600px] border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden w-full max-w-[400px] ${
+  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-[600px] border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden  w-full max-w-[400px] ${
     toggleform ? 'show mx-0' : ''
   }`}
   style={{ overflowY: 'auto' }}
@@ -188,7 +207,7 @@ import CryptoMarket from './cryptomarket';
         <p className="text-lg font-semibold font-manrope text-gray-100">PayID: {payID}</p>
         <FontAwesomeIcon
           icon={faCopy}
-          className="text-gray-300 text-xl cursor-pointer"
+          className="text-gray-200 text-xl cursor-pointer"
           onClick={copyToClipboard}
         />
         {copied && (
@@ -270,7 +289,7 @@ import CryptoMarket from './cryptomarket';
       className="h-32 w-32 rounded-full border-4 border-white shadow-lg mb-4"
     />
     <p className="text-center text-lg text-gray-200">
-      Daily Check-In System
+      Daily Check-In 
     </p>
   </div>
 </div>
