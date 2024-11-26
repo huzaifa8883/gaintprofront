@@ -5,6 +5,7 @@ import { faQuestionCircle ,faMicrophone, faMessage, faCommentDots,faXmark,faHear
 import image1 from  "../assets/image2.png"
 import image2 from "../assets/image3.png"
 import CryptoMarket from './cryptomarket';
+import BottomNavigation from './Bottomnavigation';
  const Home = () => {
   const [toggleform, settoggleform] = useState(false)
     const [copied, setCopied] = useState(false);
@@ -354,6 +355,7 @@ import CryptoMarket from './cryptomarket';
     </div>
 
 </div>
+<BottomNavigation/>
 
       {/* Keyframe Animation */}
       <style>
