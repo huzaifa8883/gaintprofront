@@ -80,7 +80,88 @@ import BottomNavigation from './Bottomnavigation';
   </div>
 </div>
 
+<div
+  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-96 border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden  w-full max-w-[400px] ${
+    toggleform ? 'show mx-0' : ''
+  }`}
+  style={{ overflowY: 'auto' }}
+>
+  {/* User Info Section */}
+  <div className="flex items-center space-x-4 p-4 mt-40 relative">
+    {/* Profile Image */}
+    <div className="h-[80px] w-[80px] rounded-full overflow-hidden border-4 border-purple-500">
+      <img
+        src="https://i.pravatar.cc/150?img=3" // Replace with actual image URL
+        alt="User Profile"
+        className="h-full w-full object-cover"
+      />
+    </div>
 
+    {/* User Info */}
+    <div className="flex flex-col">
+      <div className="flex items-center space-x-2">
+        <p className="text-lg font-semibold font-manrope text-gray-100">PayID: {payID}</p>
+        <FontAwesomeIcon
+          icon={faCopy}
+          className="text-gray-200 text-xl cursor-pointer"
+          onClick={copyToClipboard}
+        />
+        {copied && (
+          <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
+        )}
+      </div>
+
+      <p className="text-lg text-white flex items-center space-x-2 mt-2">
+        <span>test144</span>
+        <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
+      </p>
+
+      <div className="bg-green-500 text-white w-14 text-xs px-2 py-1 rounded-full mt-2">
+        <p>Verified</p>
+      </div>
+    </div>
+
+    {/* Close Icon */}
+    <div>
+    <FontAwesomeIcon
+              icon={faXmark}
+              className="text-[29px] text-white cursor-pointer translate-x-[50px] translate-y-[-60px] hover:opacity-80 transition-opacity duration-200"
+              onClick={handletoggleform}
+            />
+    </div>
+  </div>
+  <div className='bg-gray-800 w-full h-[1px]'></div>
+  {/* Buttons Section */}
+{/* Buttons Section */}
+{/* Buttons Section */}
+<div className="flex flex-col space-y-4 p-4 ">
+  {[
+    { label: 'Home', icon: `https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/house-icon.png`},
+    { label: 'Deposit', icon: "https://cdn-icons-png.freepik.com/256/2984/2984516.png?semt=ais_hybrid" },
+    { label: 'Withdraw', icon: "https://cdn-icons-png.flaticon.com/512/9976/9976760.png" },
+    { label: 'Deposit Logs', icon: "https://cdn-icons-png.flaticon.com/512/8553/8553054.png" },
+    { label: 'Withdraw Logs', icon: "https://media.lordicon.com/icons/wired/lineal/2066-withdrawal.svg" },
+    { label: 'Transfer Logs', icon: "https://cdn-icons-png.flaticon.com/512/4403/4403232.png" },
+    { label: 'Settings', icon: "https://cdn-icons-png.freepik.com/256/1103/1103621.png?semt=ais_hybrid" },
+  ].map((item, index) => (
+    <button
+      key={index}
+      className="flex items-center space-x-4 h-16 px-4 py-2 font-raleway text-purple-900 bg-purple-300 hover:bg-purple-400 border-2 border-purple-400 transition duration-300 rounded-md w-full"
+    >
+      {/* Image instead of icon */}
+      <img
+        src={item.icon}
+        alt={item.label}
+        className="h-12 w-12 rounded-md object-cover background-color: transparent;"
+      />
+      <span className="text-lg">{item.label}</span>
+    </button>
+  ))}
+</div>
+
+
+
+</div>
         {/* Scrolling Text Section */}
         <div className="w-full max-w-[95%] h-10 bg-slate-100 mt-3 py-2 rounded-md overflow-hidden mx-auto flex items-center">
       {/* Static Icon */}
@@ -185,88 +266,7 @@ import BottomNavigation from './Bottomnavigation';
     <p className="text-center text-[15px] font-semibold font-sansing text-yellow-300">App Download</p>
   </div> */}
 </div>
-<div
-  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-[600px] border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden  w-full max-w-[400px] ${
-    toggleform ? 'show mx-0' : ''
-  }`}
-  style={{ overflowY: 'auto' }}
->
-  {/* User Info Section */}
-  <div className="flex items-center space-x-4 p-4 mt-40 relative">
-    {/* Profile Image */}
-    <div className="h-[80px] w-[80px] rounded-full overflow-hidden border-4 border-purple-500">
-      <img
-        src="https://i.pravatar.cc/150?img=3" // Replace with actual image URL
-        alt="User Profile"
-        className="h-full w-full object-cover"
-      />
-    </div>
 
-    {/* User Info */}
-    <div className="flex flex-col">
-      <div className="flex items-center space-x-2">
-        <p className="text-lg font-semibold font-manrope text-gray-100">PayID: {payID}</p>
-        <FontAwesomeIcon
-          icon={faCopy}
-          className="text-gray-200 text-xl cursor-pointer"
-          onClick={copyToClipboard}
-        />
-        {copied && (
-          <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
-        )}
-      </div>
-
-      <p className="text-lg text-white flex items-center space-x-2 mt-2">
-        <span>test144</span>
-        <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
-      </p>
-
-      <div className="bg-green-500 text-white w-14 text-xs px-2 py-1 rounded-full mt-2">
-        <p>Verified</p>
-      </div>
-    </div>
-
-    {/* Close Icon */}
-    <div>
-    <FontAwesomeIcon
-              icon={faXmark}
-              className="text-[29px] text-white cursor-pointer translate-x-[50px] translate-y-[-60px] hover:opacity-80 transition-opacity duration-200"
-              onClick={handletoggleform}
-            />
-    </div>
-  </div>
-  <div className='bg-gray-800 w-full h-[1px]'></div>
-  {/* Buttons Section */}
-{/* Buttons Section */}
-{/* Buttons Section */}
-<div className="flex flex-col space-y-4 p-4 ">
-  {[
-    { label: 'Home', icon: `https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/house-icon.png`},
-    { label: 'Deposit', icon: "https://cdn-icons-png.freepik.com/256/2984/2984516.png?semt=ais_hybrid" },
-    { label: 'Withdraw', icon: "https://cdn-icons-png.flaticon.com/512/9976/9976760.png" },
-    { label: 'Deposit Logs', icon: "https://cdn-icons-png.flaticon.com/512/8553/8553054.png" },
-    { label: 'Withdraw Logs', icon: "https://media.lordicon.com/icons/wired/lineal/2066-withdrawal.svg" },
-    { label: 'Transfer Logs', icon: "https://cdn-icons-png.flaticon.com/512/4403/4403232.png" },
-    { label: 'Settings', icon: "https://cdn-icons-png.freepik.com/256/1103/1103621.png?semt=ais_hybrid" },
-  ].map((item, index) => (
-    <button
-      key={index}
-      className="flex items-center space-x-4 h-16 px-4 py-2 font-raleway text-purple-900 bg-purple-300 hover:bg-purple-400 border-2 border-purple-400 transition duration-300 rounded-md w-full"
-    >
-      {/* Image instead of icon */}
-      <img
-        src={item.icon}
-        alt={item.label}
-        className="h-12 w-12 rounded-md object-cover background-color: transparent;"
-      />
-      <span className="text-lg">{item.label}</span>
-    </button>
-  ))}
-</div>
-
-
-
-</div>
 <div className="flex justify-center items-center space-x-6 p-6">
   {/* First Div */}
   <div className="flex flex-col items-center w-[350px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-lg shadow-xl p-6 hover:scale-105 transform transition-all duration-300">

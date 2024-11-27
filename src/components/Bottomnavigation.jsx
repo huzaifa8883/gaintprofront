@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faChartLine, faExchangeAlt, faClipboardList, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const BottomNavigation = () => {
   const [active, setActive] = useState('home');
@@ -50,8 +51,11 @@ const BottomNavigation = () => {
           className={`flex flex-col items-center ${active === 'wallet' ? 'text-teal-400' : 'text-white'}`}
           onClick={() => setActive('wallet')}
         >
+          <Link to="/deposit">
           <FontAwesomeIcon icon={faWallet} className="text-2xl" />
-          <p className="text-xs">Wallet</p>
+
+          <p className="text-xs" >Wallet</p>
+          </Link>
         </div>
       </div>
     </div>

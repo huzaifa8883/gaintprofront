@@ -16,8 +16,10 @@
     "@react-financial-charts/core": "^2.0.0",
     "@react-financial-charts/series": "^2.0.0",
     "@react-financial-charts/utils": "^2.0.1",
+    "font-awesome": "^4.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.0.1",
     "recharts": "^2.13.3"
   },
   "devDependencies": {
