@@ -1,14 +1,50 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { faQuestionCircle ,faMicrophone, faMessage, faCommentDots,faXmark,faHeart,faBell,faCirclePlus,faUser,faTimes,faCheck,faCopy,faHome,faWallet,faArrowDown,faClipboardList,faFileAlt,faExchangeAlt,faCog} from '@fortawesome/free-solid-svg-icons';
 import image1 from  "../assets/image2.png"
 import image2 from "../assets/image3.png"
 import CryptoMarket from './cryptomarket';
 import BottomNavigation from './Bottomnavigation';
+import RechargePage from './Recharge';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  FaExchangeAlt,
+  FaClipboard,
+  FaNewspaper,
+  FaCog,
+  FaGlobe,
+  FaGift,
+  FaLock,
+  FaUsers,
+  FaShoppingCart,
+} from "react-icons/fa";
+const Button = ({ icon: Icon, label }) => (
+  <button className="flex items-center gap-2 px-4 py-2 text-white bg-gray-700 mt-10 w-full rounded-lg hover:bg-gray-700 hover:text-white transition duration-200">
+    <Icon className="text-xl" />
+    {label}
+  </button>
+);
+
 const Deposit = () => {
     const [toggleform, settoggleform] = useState(false)
     const [copied, setCopied] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+    const [uniqueId, setUniqueId] = useState("");
+
+    const [deposit, setDeposit] = useState({ usdt: 0, trx: 0 });
+    const generateUniqueID = () => {
+      return Math.floor(1000000 + Math.random() * 9000000); // Ensures a 7-digit number
+    };
+  
+   
+    const [error, setError] = useState(null);
+
+    const handleClick = () => {
+      setShowMessage(true);
+    };
   const payID = "7474747";
 
   const copyToClipboard = () => {
@@ -17,11 +53,18 @@ const Deposit = () => {
       setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
     });
   };
-  if (!toggleform) {
-    document.body.style.overflow = 'auto'; // Scroll hide
-  } else {
-    document.body.style.overflow = 'hidden'; // Scroll show
-  }
+  useEffect(() => {
+    // Check if an ID already exists in localStorage
+    const storedId = localStorage.getItem("uniqueId");
+    if (storedId) {
+      setUniqueId(storedId); // Use the existing ID
+    } else {
+      const newId = generateUniqueID(); // Generate a new ID
+      localStorage.setItem("uniqueId", newId); // Save to localStorage
+      setUniqueId(newId); // Set state
+    }
+  }, []);
+  
   
   const handletoggleform =()=>{
     settoggleform(!toggleform)
@@ -30,6 +73,33 @@ const Deposit = () => {
     navigate("/placeadd")
     settoggleform(!toggleform)
   }
+  useEffect(() => {
+    const fetchDeposit = async () => {
+      try {
+        // Get the token from localStorage or sessionStorage
+        // const token = localStorage.getItem("token"); // Replace with your token storage method
+        
+        // Make the request with the token
+        const response = await axios.get("https://tradingbackend-production.up.railway.app/api/auth/userdeposit", {
+          // headers: {
+          //   Authorization: `Bearer ${token}`,
+          // },
+          withCredentials: true, 
+        });
+  
+        // Update state with the fetched deposit
+        setDeposit(response.data.data.deposit);
+        //  console.log(response.data)
+      } catch (err) {
+        // Handle error (e.g., unauthorized)
+        setError("Failed to fetch deposit details");
+      }
+    };
+  
+    fetchDeposit();
+  }, []);
+  
+
   const coins = [
     {
       name: "Bitcoin",
@@ -62,8 +132,8 @@ const Deposit = () => {
   ];
   return (
     <>
-<div className='bg-gray-300 h-[1400px] w-full'>
-    <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 h-96 w-full">
+<div className='bg-gray-300 h-[1200px]  w-full'>
+  <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 h-96 w-full">
     {/* Header Section */}
     <div className="flex items-center justify-between h-20 w-full px-6">
       {/* Menu Icon */}
@@ -91,215 +161,162 @@ const Deposit = () => {
         />
       </div>
     </div>
-    <div className=" p-4 rounded-3xl shadow-lg w-80 mx-auto">
-  {/* Total Balance Title */}
-  <h3 className="text-lg font-manrope font-semibold text-gray-300">Total Balance</h3>
+    
+    <div className="flex flex-col md:flex-row justify-center gap-4 p-4">
+  {/* First Card */}
+  <div className="p-4 rounded-3xl shadow-lg w-full max-w-[380px] mx-auto">
+    {/* Total Balance Title */}
+    <h3 className="text-lg font-manrope font-semibold text-gray-300">Total Balance</h3>
 
-  {/* Total Balance Value (48.70 USDT) */}
-  <p className="text-3xl font-roboto font-bold text-gray-100 mt-2">48.70 USDT</p>
+    {/* Total Balance Value */}
+    <p className="text-3xl font-roboto font-bold text-gray-100 mt-2">{deposit.usdt}USDT</p>
 
-  {/* Equivalent Dollar Value (= 45.70$) */}
-  <p className="text-lg font-sansing text-gray-400 mt-2">= 45.70$</p>
-</div>
-<div className="h-46 w-full px-2 rounded-3xl relative">
-  {/* Card Image */}
-  <img 
-    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6-LkeyHBd9LpeJ3i5MBvDW_0ns2xVUDFb1Q&s"
-    className="object-cover h-full w-full rounded-3xl"
-    alt="Card Image"
-  />
-
-  {/* Overlay Content */}
-  <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between items-center w-full px-4">
-    {/* Visa Text */}
-    <p className="text-white text-2xl font-roboto font-semibold">VISA</p>
-
-    {/* Card Number with Copy Icon */}
-    <div className="flex items-center space-x-2">
-      <p className="text-white text-xl font-roboto">6543434</p>
-      <i className="fa fa-copy text-white text-2xl cursor-pointer" />
-    </div>
-  
+    {/* Equivalent Dollar Value */}
+    <p className="text-lg font-sansing text-gray-400 mt-2">= {deposit.usdt}$</p>
   </div>
-  <div className="absolute glass-effect top-20 left-0 flex flex-col justify-start items-start w-full h-[1000px] px-4">
-  {/* Trending Wallet Text */}
-  <p className="text-white text-sm font-roboto font-semibold my-3">Trending Wallet</p>
 
-  {/* USDT Amount */}
+  {/* Second Card */}
+  <div className="p-4 rounded-3xl shadow-lg w-full max-w-[380px] mx-auto">
+    {/* Transaction Title */}
+    <h3 className="text-lg font-manrope font-semibold text-gray-300">Total Transactions</h3>
+
+    {/* Total Transactions Value */}
+    <p className="text-3xl font-roboto font-bold text-gray-100 mt-2">{deposit.trx} TRX</p>
+
+    {/* Equivalent Dollar Value */}
+    <p className="text-lg font-sansing text-gray-400 mt-2">={deposit.trx}$</p>
+  </div>
+</div>
+
+
+    <div className="h-46 w-full px-2 rounded-3xl relative">
+      {/* Card Image */}
+      <img 
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6-LkeyHBd9LpeJ3i5MBvDW_0ns2xVUDFb1Q&s"
+        className="object-cover h-full w-full rounded-3xl"
+        alt="Card Image"
+      />
+
+      {/* Overlay Content */}
+      <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between items-center w-full px-4">
+        {/* Visa Text */}
+        <p className="text-white text-2xl font-roboto font-semibold">VISA</p>
+
+        {/* Card Number with Copy Icon */}
+        <div className="flex items-center space-x-2">
+      <p className="text-white text-xl font-roboto">{uniqueId}</p>
+      <i
+        className="fa fa-copy text-white text-2xl cursor-pointer"
+        onClick={() => navigator.clipboard.writeText(uniqueId)}
+      />
+    </div>
+      </div>
+
+      <div className="absolute glass-effect top-20 left-0 flex flex-col  justify-start items-start w-full px-4">
+        {/* Trending Wallet Text */}
+        <p className="text-white text-sm font-roboto font-semibold my-3">Trending Wallet</p>
+
+        {/* USDT Amount */}
+        <div className="flex justify-between items-center gap-4">
+  {/* First Item */}
   <div className="flex items-center">
-    <p className="text-white text-3xl font-montserrat">50.00</p>
+    <p className="text-white text-3xl font-montserrat">{deposit.usdt}</p>
     <p className="text-white text-sm font-helveticaLight ml-2">USDT</p>
   </div>
-  <div className="flex space-x-16 justify-between items-center mt-10 ml-3">
-  {/* Deposit Card */}
-  <div className="h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex flex-col justify-between items-center p-2">
-  <img 
-    src="https://cdn-icons-png.flaticon.com/512/2976/2976467.png" 
-    alt="Deposit Icon" 
-    className="w-16 h-16 object-cover"
-  />
-  <p className="text-purple-600 text-sm font-roboto mt-6">Deposit</p>
-</div>
 
-
-  {/* Withdraw Card */}
-  <div className="h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex flex-col justify-between items-center p-2">
-    <img 
-      src="https://cdn-icons-png.flaticon.com/512/9976/9976760.png" 
-      alt="Withdraw Icon" 
-      className="w-16 h-16 object-cover"
-    />
-    <p className="text-purple-600 text-sm font-roboto mt-6">Withdraw</p>
+  {/* Second Item */}
+  <div className="flex items-center">
+    <p className="text-white text-3xl font-montserrat">{deposit.trx}</p>
+    <p className="text-white text-sm font-helveticaLight ml-2">TRX</p>
   </div>
-
-  {/* Transfer Card */}
-  <div className="h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex flex-col justify-between items-center p-2">
-    <img 
-      src="https://cdn-icons-png.flaticon.com/512/179/179793.png" 
-      alt="Transfer Icon" 
-      className="w-16 h-16 object-cover"
-    />
-    <p className="text-purple-600 text-sm font-roboto mt-6">Transfer</p>
-  </div>
-
-</div>
-<div className='h-[1px] w-full'></div>
-
-
-
 </div>
 
 
-</div>
-<div className="p-6 mt-28 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg shadow-lg">
-  {/* Balances Section */}
-    <h2 className="  font-roboto font-bold rounded-lg  hover:shadow-lg transition transform hover:-translate-y-2">Balances</h2>
-  
+        <div className="flex flex-wrap justify-between items-center mt-10 space-x-8 ">
+          {/* Deposit Card */}
+          <Link to="/transfer">
+          <div className="h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex flex-col justify-between items-center p-2">
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/2976/2976467.png" 
+              alt="Deposit Icon" 
+              className="w-16 h-16 object-cover"
+            />
+            <p className="text-purple-500 text-sm font-roboto mt-6">Deposit</p>
+          </div>
+          </Link>
 
-  {/* Coin Grid */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {coins.map((coin, index) => (
-      <div
-        key={index}
-        className="flex flex-col items-start p-4 bg-white border-2 border-pink-600 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-2"
-      >
-        {/* Coin Details */}
-        <div className="flex items-center w-full mb-4">
-          <img
-            src={coin.image}
-            alt={coin.name}
-            className="w-14 h-14 rounded-full bg-gray-300 mr-4"
-          />
+          {/* Withdraw Card */}
+          <Link to="/withdraw">
+          <div className="h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex flex-col justify-between items-center p-2">
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/9976/9976760.png" 
+              alt="Withdraw Icon" 
+              className="w-16 h-16 object-cover"
+            />
+            <p className="text-purple-600 text-sm font-roboto mt-6">Withdraw</p>
+          </div>
+          </Link>
+          {/* Transfer Card */}
           <div>
-            <div className="flex items-center">
-              <h3 className="text-lg font-semibold text-gray-800">{coin.name}</h3>
-              <span className="ml-2 text-xl font-medium text-purple-700">
-                {coin.price}
-              </span>
-            </div>
-            <p className="text-sm text-gray-500">{coin.symbol}</p>
-            <div className="flex justify-between items-center mt-4">
-              <span
-                className={`text-sm font-medium ${
-                  coin.change.startsWith("-") ? "text-red-500" : "text-green-500"
-                }`}
-              >
-                {coin.change}
-              </span>
-            </div>
+      {/* Transfer Button */}
+      <div 
+        className="h-16 w-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex flex-col justify-between items-center p-2 cursor-pointer"
+        onClick={handleClick}
+      >
+        <img 
+          src="https://cdn-icons-png.flaticon.com/512/179/179793.png" 
+          alt="Transfer Icon" 
+          className="w-16 h-16 object-cover"
+        />
+        <p className="text-purple-600 text-sm font-roboto mt-6">Transfer</p>
+      </div>
+
+      {/* Popup Message */}
+      {showMessage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <p className="text-center text-lg font-roboto text-gray-700">Not open yet</p>
+            <button 
+              className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-xl" 
+              onClick={() => setShowMessage(false)}
+            >
+              Close
+            </button>
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-</div>
-
-
-</div>
-
-<div
-  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-[500px] border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden  w-full max-w-[400px] ${
-    toggleform ? 'show mx-0' : ''
-  }`}
-  style={{ overflowY: 'auto' }}
->
-  {/* User Info Section */}
-  <div className="flex items-center space-x-4 p-4 mt-40 relative">
-    {/* Profile Image */}
-    <div className="h-[80px] w-[80px] rounded-full overflow-hidden border-4 border-purple-500">
-      <img
-        src="https://i.pravatar.cc/150?img=3" // Replace with actual image URL
-        alt="User Profile"
-        className="h-full w-full object-cover"
-      />
+      )}
     </div>
+        </div>
 
-    {/* User Info */}
-    <div className="flex flex-col">
-      <div className="flex items-center space-x-2">
-        <p className="text-lg font-semibold font-manrope text-gray-100">PayID: {payID}</p>
-        <FontAwesomeIcon
-          icon={faCopy}
-          className="text-gray-200 text-xl cursor-pointer"
-          onClick={copyToClipboard}
-        />
-        {copied && (
-          <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
-        )}
-      </div>
-
-      <p className="text-lg text-white flex items-center space-x-2 mt-2">
-        <span>test144</span>
-        <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
-      </p>
-
-      <div className="bg-green-500 text-white w-14 text-xs px-2 py-1 rounded-full mt-2">
-        <p>Verified</p>
-      </div>
+        <div className='h-[1px] w-full'></div>
+        <div className="space-y-2 p-4  text-gray-800">
+          <Link to={"/trade"}>
+      <Button icon={FaShoppingCart} label="Trade" />
+</Link>
+      <Link to="/trade">
+      <Button icon={FaClipboard} label="Record" />
+      </Link>
+ 
+     <Link to={"/transactions"}>
+      <Button icon={FaExchangeAlt} label="Exchange" />
+      </Link>
+      <Link to="/myteam">
+      <Button icon={FaUsers} label="My Team" />
+      </Link>
+      <Link to="/setting">
+      <Button icon={FaUsers} label="Setting" />
+      </Link>
     </div>
-
-    {/* Close Icon */}
-    <div>
-    <FontAwesomeIcon
-              icon={faXmark}
-              className="text-[29px] text-white cursor-pointer translate-x-[50px] translate-y-[-60px] hover:opacity-80 transition-opacity duration-200"
-              onClick={handletoggleform}
-            />
+      </div>
     </div>
   </div>
-  <div className='bg-gray-800 w-full h-[1px]'></div>
-  {/* Buttons Section */}
-{/* Buttons Section */}
-{/* Buttons Section */}
-<div className="flex flex-col space-y-4 p-4 ">
-  {[
-    { label: 'Home', icon: `https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/house-icon.png`},
-    { label: 'Deposit', icon: "https://cdn-icons-png.freepik.com/256/2984/2984516.png?semt=ais_hybrid" },
-    { label: 'Withdraw', icon: "https://cdn-icons-png.flaticon.com/512/9976/9976760.png" },
-    { label: 'Deposit Logs', icon: "https://cdn-icons-png.flaticon.com/512/8553/8553054.png" },
-    { label: 'Withdraw Logs', icon: "https://media.lordicon.com/icons/wired/lineal/2066-withdrawal.svg" },
-    { label: 'Transfer Logs', icon: "https://cdn-icons-png.flaticon.com/512/4403/4403232.png" },
-    { label: 'Settings', icon: "https://cdn-icons-png.freepik.com/256/1103/1103621.png?semt=ais_hybrid" },
-  ].map((item, index) => (
-    <button
-      key={index}
-      className="flex items-center space-x-4 h-16 px-4 py-2 font-raleway text-purple-900 bg-purple-300 hover:bg-purple-400 border-2 border-purple-400 transition duration-300 rounded-md w-full"
-    >
-      {/* Image instead of icon */}
-      <img
-        src={item.icon}
-        alt={item.label}
-        className="h-12 w-12 rounded-md object-cover background-color: transparent;"
-      />
-      <span className="text-lg">{item.label}</span>
-    </button>
-  ))}
-</div>
+{/* 
 
+  {/* Sidebar */}
 
 
 </div>
-</div>
+
 <BottomNavigation/>
 </>
   )

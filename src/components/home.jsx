@@ -1,14 +1,46 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { faQuestionCircle ,faMicrophone, faMessage, faCommentDots,faXmark,faHeart,faBell,faCirclePlus,faUser,faTimes,faCheck,faCopy,faHome,faWallet,faArrowDown,faClipboardList,faFileAlt,faExchangeAlt,faCog} from '@fortawesome/free-solid-svg-icons';
 import image1 from  "../assets/image2.png"
 import image2 from "../assets/image3.png"
 import CryptoMarket from './cryptomarket';
+import { FaVolumeUp } from "react-icons/fa"; // Speaker icon from react-icons
+
 import BottomNavigation from './Bottomnavigation';
+import { Link } from 'react-router-dom';
  const Home = () => {
   const [toggleform, settoggleform] = useState(false)
     const [copied, setCopied] = useState(false);
+    const [showTrx, setShowTrx] = useState(true); // State to toggle between trx and usdt
+
+      const [data, setData] = useState({
+    won: "1080***24", 
+    Usdt: "289.443", 
+    Trx: "289.443",   // Initial "trx" data
+  });
+
+  // Function to update data every second (this can be modified as needed)
+  useEffect(() => {
+    // Simulate data updates every second
+    const dataInterval = setInterval(() => {
+      setData({
+        won: `${Math.floor(Math.random() * 10000)}***${Math.floor(Math.random() * 100)}`,
+        Trx: (Math.random() * 1000).toFixed(3),
+        Usdt: (Math.random() * 1000).toFixed(3),
+      });
+    }, 1000);
+
+    // Toggle between trx and usdt every second
+    const toggleInterval = setInterval(() => {
+      setShowTrx((prev) => !prev);
+    }, 1000);
+
+    return () => {
+      clearInterval(dataInterval);
+      clearInterval(toggleInterval);
+    };
+  }, []);
   const payID = "7474747";
 
   const copyToClipboard = () => {
@@ -17,11 +49,7 @@ import BottomNavigation from './Bottomnavigation';
       setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
     });
   };
-  if (!toggleform) {
-    document.body.style.overflow = 'auto'; // Scroll hide
-  } else {
-    document.body.style.overflow = 'hidden'; // Scroll show
-  }
+ 
   
   const handletoggleform =()=>{
     settoggleform(!toggleform)
@@ -30,6 +58,39 @@ import BottomNavigation from './Bottomnavigation';
     navigate("/placeadd")
     settoggleform(!toggleform)
   }
+  useEffect(() => {
+    let timeout;
+  
+    timeout = setTimeout(() => {
+      const script = document.createElement("script");
+      script.src = "//code.tidio.co/2tdb8phixpcppoebkjwstz2r3uqnv5lb.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.TidioChatApi) {
+          window.TidioChatApi.open();
+        }
+  
+        // Add custom styles to move the chatbot
+        const style = document.createElement("style");
+        style.innerHTML = `
+          #tidio-chat {
+            bottom: 100px !important; /* Adjust as needed */
+          }
+          #tidio-chat iframe {
+            bottom: 100px !important;
+          }
+        `;
+        document.head.appendChild(style);
+      };
+      document.body.appendChild(script);
+    }, 200);
+  
+    return () => clearTimeout(timeout);
+  }, []);
+  
+  
+  
+  
   return (
     <>
       <div className="bg-gradient-to-r from-purple-700 via-purple-400 to-purple-300 min-h-screen w-full">
@@ -46,7 +107,7 @@ import BottomNavigation from './Bottomnavigation';
 
           {/* Center Text */}
           <div className="absolute left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 text-transparent bg-clip-text font-extrabold text-3xl md:text-4xl tracking-wide drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]">
-            Gain
+            Gaint
             <span className="text-white text-opacity-90 drop-shadow-[0_3px_5px_rgba(255,255,255,0.6)] italic underline decoration-purple-300 decoration-2 underline-offset-2">
               Pro
             </span>
@@ -66,13 +127,19 @@ import BottomNavigation from './Bottomnavigation';
   <div className="md:h-[400px] h-full w-full rounded-lg overflow-hidden relative">
     {/* Background Image */}
     <img
-      src="https://www.betcasn.com/images/banner-1.png"
-      alt="Stylish Background"
-      className="h-full w-full object-cover"
-    />
+      src="https://wallpapersmug.com/download/3840x2400/cdba82/bitcoin-digital-circuit-art.jpg"
+      alt="Stylish Backgroun"
+      className="h-full w-full object-cover" 
+     />
 
     {/* Text Overlay */}
+    <h2 className="absolute inset-0 px-8 py-2 text-white text-4xl md:text-5xl font-extrabold drop-shadow-2xl font-roboto">
+            GaintPro
+           
+          </h2>
     <div className="absolute inset-0 flex items-start justify-start bg-black bg-opacity-30 p-4 py-20">
+  
+
       <h2 className="text-white text-2xl md:text-3xl font-bold drop-shadow-lg font-roboto">
         Master BET <br /> Make Money in Real Time
       </h2>
@@ -80,88 +147,7 @@ import BottomNavigation from './Bottomnavigation';
   </div>
 </div>
 
-<div
-  className={`h-[1100px] visible lg:invisible glass-effect absolute overflow-y-auto -mt-96 border-r-[1px] border-slate-600 z-[9999] backing overflow-x-hidden  w-full max-w-[400px] ${
-    toggleform ? 'show mx-0' : ''
-  }`}
-  style={{ overflowY: 'auto' }}
->
-  {/* User Info Section */}
-  <div className="flex items-center space-x-4 p-4 mt-40 relative">
-    {/* Profile Image */}
-    <div className="h-[80px] w-[80px] rounded-full overflow-hidden border-4 border-purple-500">
-      <img
-        src="https://i.pravatar.cc/150?img=3" // Replace with actual image URL
-        alt="User Profile"
-        className="h-full w-full object-cover"
-      />
-    </div>
 
-    {/* User Info */}
-    <div className="flex flex-col">
-      <div className="flex items-center space-x-2">
-        <p className="text-lg font-semibold font-manrope text-gray-100">PayID: {payID}</p>
-        <FontAwesomeIcon
-          icon={faCopy}
-          className="text-gray-200 text-xl cursor-pointer"
-          onClick={copyToClipboard}
-        />
-        {copied && (
-          <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
-        )}
-      </div>
-
-      <p className="text-lg text-white flex items-center space-x-2 mt-2">
-        <span>test144</span>
-        <FontAwesomeIcon icon={faCheck} className="text-green-500 text-xl" />
-      </p>
-
-      <div className="bg-green-500 text-white w-14 text-xs px-2 py-1 rounded-full mt-2">
-        <p>Verified</p>
-      </div>
-    </div>
-
-    {/* Close Icon */}
-    <div>
-    <FontAwesomeIcon
-              icon={faXmark}
-              className="text-[29px] text-white cursor-pointer translate-x-[50px] translate-y-[-60px] hover:opacity-80 transition-opacity duration-200"
-              onClick={handletoggleform}
-            />
-    </div>
-  </div>
-  <div className='bg-gray-800 w-full h-[1px]'></div>
-  {/* Buttons Section */}
-{/* Buttons Section */}
-{/* Buttons Section */}
-<div className="flex flex-col space-y-4 p-4 ">
-  {[
-    { label: 'Home', icon: `https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/house-icon.png`},
-    { label: 'Deposit', icon: "https://cdn-icons-png.freepik.com/256/2984/2984516.png?semt=ais_hybrid" },
-    { label: 'Withdraw', icon: "https://cdn-icons-png.flaticon.com/512/9976/9976760.png" },
-    { label: 'Deposit Logs', icon: "https://cdn-icons-png.flaticon.com/512/8553/8553054.png" },
-    { label: 'Withdraw Logs', icon: "https://media.lordicon.com/icons/wired/lineal/2066-withdrawal.svg" },
-    { label: 'Transfer Logs', icon: "https://cdn-icons-png.flaticon.com/512/4403/4403232.png" },
-    { label: 'Settings', icon: "https://cdn-icons-png.freepik.com/256/1103/1103621.png?semt=ais_hybrid" },
-  ].map((item, index) => (
-    <button
-      key={index}
-      className="flex items-center space-x-4 h-16 px-4 py-2 font-raleway text-purple-900 bg-purple-300 hover:bg-purple-400 border-2 border-purple-400 transition duration-300 rounded-md w-full"
-    >
-      {/* Image instead of icon */}
-      <img
-        src={item.icon}
-        alt={item.label}
-        className="h-12 w-12 rounded-md object-cover background-color: transparent;"
-      />
-      <span className="text-lg">{item.label}</span>
-    </button>
-  ))}
-</div>
-
-
-
-</div>
         {/* Scrolling Text Section */}
         <div className="w-full max-w-[95%] h-10 bg-slate-100 mt-3 py-2 rounded-md overflow-hidden mx-auto flex items-center">
       {/* Static Icon */}
@@ -174,12 +160,12 @@ import BottomNavigation from './Bottomnavigation';
       <div className="relative w-full h-full overflow-hidden">
         <div className="absolute w-full h-full animate-marquee">
           <p className="whitespace-nowrap font-bold text-[16px] text-[#4f46e5] font-manrope">
-            GainPro - KT Dev Trading Demo 
+            GaintPro - KT Dev Trading 
           </p>
         </div>
       </div>
     </div>
-
+   
 <div className="flex justify-between mt-6 px-2">
   {/* First Div - Deposit */}
   <div className="flex flex-col items-center w-1/5">
@@ -190,11 +176,13 @@ import BottomNavigation from './Bottomnavigation';
         className="h-full w-full object-cover border-blue-500"
       />
     </div>
+    <Link to="/deposit">
     <div className="bg-gray-200 p-2 rounded-md shadow-md h-auto">
   <p className="text-center text-[15px] font-semibold font-sansing text-teal-600">
     Deposit
   </p>
 </div>
+</Link>
 
 
 
@@ -210,11 +198,14 @@ import BottomNavigation from './Bottomnavigation';
         className="h-full w-full object-cover"
       />
     </div>
+    <Link to={"/withdraw"}>
     <div className="bg-gray-200 p-2 rounded-md shadow-md h-auto">
+      
   <p className="text-center text-[15px] font-semibold font-sansing text-teal-600">
     Withdraw
   </p>
 </div>
+</Link>
 
   </div>
 
@@ -266,7 +257,20 @@ import BottomNavigation from './Bottomnavigation';
     <p className="text-center text-[15px] font-semibold font-sansing text-yellow-300">App Download</p>
   </div> */}
 </div>
+<div className="relative flex items-center mx-4 mt-4  bg-gray-200 text-gray-800 p-3 rounded-lg shadow-md">
+      {/* Speaker Icon behind the data */}
+      <FaVolumeUp className="absolute left-0 text-gray-500 opacity-50 text-3xl z-0 " />
 
+      {/* Data display */}
+      <div className="z-10 flex text-lg font-semibold gap-2 px-8">
+      <span>{data.won}</span>
+      <span>won</span>
+      <span>
+        {showTrx ? `${data.Trx} TRX` : `${data.Usdt} USDT`} {/* Alternate display */}
+      </span>
+    </div>
+
+    </div>
 <div className="flex justify-center items-center space-x-6 p-6">
   {/* First Div */}
   <div className="flex flex-col items-center w-[350px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-lg shadow-xl p-6 hover:scale-105 transform transition-all duration-300">
@@ -355,6 +359,8 @@ import BottomNavigation from './Bottomnavigation';
     </div>
 
 </div>
+
+
 <BottomNavigation/>
 
       {/* Keyframe Animation */}

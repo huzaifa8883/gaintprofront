@@ -39,7 +39,7 @@ const createRandomOrder = (id) => {
 // }
 // console.log(orders);
 
-const CryptoMarket = () => {
+const Transactions = () => {
   const [coins, setCoins] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [timeLeft, setTimeLeft] = useState(() => {
@@ -505,10 +505,10 @@ const getColorForLabel = (label) => {
   return "bg-gray-500"; // Default color if none matches
 };
   return (
-    <div className="p-6 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white rounded-lg shadow-lg">
+    <div className=" bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white rounded-lg shadow-lg overflow-y-auto w-full">
       <h2 className="text-3xl font-bold mb-6 text-center">Crypto Market</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto">
         {coins.map((coin) => (
           <div
             key={coin.id}
@@ -536,20 +536,26 @@ const getColorForLabel = (label) => {
           </div>
         ))}
       </div>
-
       {selectedCoin && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-100">
-    <div className="relative bg-white text-gray-800 p-6 rounded-lg shadow-lg max-w-4xl w-full">
-      <button
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-100   ">
+    <div className="relative bg-white text-gray-800 p-6 rounded-lg shadow-lg   w-full">
+      {/* <button
         className="absolute top-7 right-3 text-gray-500 hover:text-gray-800 text-xl  font-bold"
         onClick={closePopup}
       >
         &times;
-      </button>
-      <h3 className="text-2xl font-bold mb-4">
-        {selectedCoin.name} ({selectedCoin.symbol.toUpperCase()})
-      </h3>
+      </button> */}
+     
+     
       <div id="tradingview_chart" className="h-64 mb-6">
+      <Link to="/home">
+      <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="text-black text-3xl my-6  cursor-pointer  transition-all duration-300"
+              />
+              </Link>
+                      
+    
       <iframe
   src={`https://s.tradingview.com/widgetembed/?symbol=${selectedCoin.symbol.toUpperCase()}USD&interval=D&theme=light&style=1&locale=en&toolbarbg=f1f3f6&hide_top_toolbar=1&hide_side_toolbar=1`}
   width="100%"
@@ -559,7 +565,8 @@ const getColorForLabel = (label) => {
 ></iframe>
 
       </div>
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
+    
+<div style={{ textAlign: "center", marginTop: "30px" }}>
       <h1
         style={{
           fontSize: "3rem",
@@ -571,7 +578,12 @@ const getColorForLabel = (label) => {
       </h1>
     </div>
       <div className="relative bg-gray-100 p-4 rounded-md max-h-80 overflow-y-auto">
-  <h4 className="text-lg font-semibold mb-2 text-center sm:text-left">
+      <Link to="/transactions2">
+      <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+      click for 5 min
+    </button>
+</Link>
+  <h4 className="text-lg font-semibold mb-2 text-center ">
     Order Details
   </h4>
   <table className="table-auto w-full text-left mb-4 border-collapse">
@@ -584,7 +596,7 @@ const getColorForLabel = (label) => {
       </tr>
     </thead>
     <tbody>
-    {orders.map((order) => (
+  {orders.map((order) => (
     <tr key={order.id} className="odd:bg-white even:bg-gray-50">
       <td className="px-2 sm:px-4 py-2 border text-xs sm:text-sm">
         {order.orderNumber}
@@ -594,7 +606,7 @@ const getColorForLabel = (label) => {
       </td>
       <td className="px-2 sm:px-4 py-2 border text-xs sm:text-sm">
       <div className="flex flex-wrap gap-2">
-        {order.adTypes.map((adType) => (
+  {order.adTypes.map((adType) => (
     <button
       key={adType}
       className={`px-2 py-1 border rounded ${
@@ -613,15 +625,19 @@ const getColorForLabel = (label) => {
       {adType}
     </button>
   ))}
-        </div>
+</div>
+
+
+
       </td>
       <td className="px-2 sm:px-4 py-2 border text-xs sm:text-sm">
-      {new Date(order.rawTime).toLocaleTimeString()}
-      </td>
+                            {new Date(order.rawTime).toLocaleTimeString()}
+
+
+          </td>
       
     </tr>
   ))}
-
 </tbody>
 
 
@@ -644,6 +660,7 @@ const getColorForLabel = (label) => {
     </div>
   </div>
 )}
+
 
 
 
@@ -682,26 +699,32 @@ const getColorForLabel = (label) => {
             <h3 className="text-2xl font-bold mb-4">Place Your Order</h3>
             <div className="flex justify-between mb-4">
         {/* Timer Display */}
-        <span className="text-lg">Time Left: {timeLeft}s</span>
+        {/* <span className="text-lg">Time Left: {timeLeft}s</span> */}
       </div>
 
             <div className="space-y-4">
               {/* Buttons for the options in a single row */}
               <div className="grid grid-cols-4 gap-4">
       {/* Render the buttons dynamically */}
-      {buttons.map((button, index) => (
-        <button
-          key={index}
-          onClick={() => handleClick(index)} // Pass the index to handleClick
-          className={`border border-gray-300 text-lg p-2 rounded shadow ${
-            activeButton === index ? "bg-blue-500 text-white" : "bg-transparent hover:bg-gray-100"
-          }`}
-        >
-          {button.label} <br /> {button.price}
-        </button>
-      ))}
+      {buttons.map((button, index) => {
+  const sizeColor = getColorForLabel(button.label); // Get the color based on label
+  return (
+    <button
+      key={index}
+      onClick={() => handleClick(index)}
+      className={`border border-gray-300 text-lg p-2 rounded shadow ${
+        activeButton === index
+          ? `${sizeColor} text-white`
+          : "bg-transparent hover:bg-gray-100"
+      }`}
+    >
+      {button.label} <br /> ${button.price.toFixed(2)}
+    </button>
+  );
+})}
     </div>
 
+              {/* Currency Type and Amount Input */}
               {/* Currency Type and Amount Input */}
               <div className="flex items-center justify-between">
                 <label className="text-lg">Currency Type</label>
@@ -749,7 +772,6 @@ const getColorForLabel = (label) => {
     {popupDetails.amount ? `${popupDetails.amount} ${popupDetails.currencyType}` : `0 ${popupDetails.currencyType}`}
   </span>
 </div>
-
               {/* Confirm Order Button */}
               <div>
               <button
@@ -771,4 +793,4 @@ const getColorForLabel = (label) => {
   );
 };
 
-export default CryptoMarket;
+export default Transactions;

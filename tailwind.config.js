@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      zIndex: {
+        '60': '60',
+        '100': '100',
+        // Aur bhi values yahan add kar sakte hain
+      },
       fontFamily: {
         sans: ['"Open Sans"'],
         sansing: ['"Open Sans", "sans-serif"'],
