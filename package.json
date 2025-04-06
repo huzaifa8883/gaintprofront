@@ -16,6 +16,7 @@
     "@react-financial-charts/core": "^2.0.0",
     "@react-financial-charts/series": "^2.0.0",
     "@react-financial-charts/utils": "^2.0.1",
+    "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "font-awesome": "^4.7.0",
