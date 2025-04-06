@@ -4,30 +4,6 @@ import {Link} from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 // import image1 from  "../assets/image2.png"
-const getRandomAdSequence = () => {
-  const adTypes = ["Single", "Double"];
-  const isBig = Math.random() > 0.5;
-  const mainAd = isBig ? "Big" : "Small";
-  const randomAdType = adTypes[Math.floor(Math.random() * adTypes.length)];
-  return [`${mainAd}`, `${randomAdType}`, `${mainAd} ${randomAdType}`];
-};
-
-
-const randomSequence = getRandomAdSequence();
-console.log("Random Ad Sequence:", randomSequence.join(" "));
-
-
-const createRandomOrder = (id) => {
-  const currentTime = new Date();
-  return {
-    id: `order-${id}-${Date.now()}`, // Ensure unique ID
-    orderNumber: Math.floor(Math.random() * 10000000000000),
-    amount: Math.floor(Math.random() * (92000 - 91000 + 1)) + 91000,
-    adTypes: getRandomAdSequence(),
-    time: currentTime.toLocaleTimeString(),
-    rawTime: currentTime.toISOString(),
-  };
-};
 
 
 
@@ -54,11 +30,8 @@ const Transactions = () => {
 
     const [deposit, setDeposit] = useState({ USDT: 0, TRX: 0 });
   const [isBuyPopupOpen, setIsBuyPopupOpen] = useState(false); // New state
-  const [orders, setOrders] = useState(() => {
-    // Load orders from localStorage or start with an empty array
-    const savedOrders = localStorage.getItem("orders");
-    return savedOrders ? JSON.parse(savedOrders) : [];
-  });
+  const [orders, setOrders] = useState([])
+  ;
 
    const [isFiveMinute, setIsFiveMinute] = useState(false); // To toggle between 1 min and 5 min
 
@@ -114,29 +87,29 @@ const Transactions = () => {
  
  // This useEffect manages the timer update
 
-  useEffect(() => {
-      const fetchTimer = async () => {
-        try {
-          const response = await fetch("https://tradingbackend-production.up.railway.app/timer");
-          const data = await response.json();
-          setTimer(data.remainingTime);
+  // useEffect(() => {
+  //     const fetchTimer = async () => {
+  //       try {
+  //         const response = await fetch("https://tradingbackend-production.up.railway.app/timer");
+  //         const data = await response.json();
+  //         setTimer(data.remainingTime);
   
-          // Jab timer 1 ho, toh adRandomAd() call kare aur timer reset kare
-          if (data.remainingTime === 1) {
-            addRandomAd();
-            await fetch("https://tradingbackend-production.up.railway.app/reset-timer", { method: "POST" });
-          }
-        } catch (error) {
-          console.error("Error fetching timer:", error);
-        }
-      };
+  //         // Jab timer 1 ho, toh adRandomAd() call kare aur timer reset kare
+  //         if (data.remainingTime === 1) {
+  //           addRandomAd();
+  //           await fetch("https://tradingbackend-production.up.railway.app/reset-timer", { method: "POST" });
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching timer:", error);
+  //       }
+  //     };
   
-      fetchTimer(); // Pehli dafa fetch karega
+  //     fetchTimer(); // Pehli dafa fetch karega
   
-      intervalRef.current = setInterval(fetchTimer, 1000); // Backend se har second updated time fetch karega
+  //     intervalRef.current = setInterval(fetchTimer, 1000); // Backend se har second updated time fetch karega
   
-      return () => clearInterval(intervalRef.current);
-    }, []);
+  //     return () => clearInterval(intervalRef.current);
+  //   }, []);
 // useEffect(() => {
 //   // Fix order when navigating back
 //   const savedOrders = localStorage.getItem("orders");
@@ -153,19 +126,47 @@ const Transactions = () => {
 //     localStorage.setItem("orders", JSON.stringify(uniqueOrders)); // Sync with localStorage
 //   }
 // }, []);
-useEffect(() => {
-  const fetchOrders = async () => {
-    try {
-      const response = await fetch("https://tradingbackend-production.up.railway.app/api/orders");
-      const data = await response.json();
-      setOrders(data);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
+const fetchOrders = async () => {
+  try {
+    const response = await fetch("https://tradingbackend-production.up.railway.app/api/orders");
+    const data = await response.json();
+    setOrders(data);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+  }
+};
+const fetchTimer = async () => {
+  try {
+    const response = await fetch("https://tradingbackend-production.up.railway.app/api/timer"); // ✅ Change HTTPS → HTTP
+    const data = await response.json();
+    setTimer(data.countdown);
+    fetchOrders(); 
+      // ✅ **Jab Timer `0` Pe Aaye Tabhi New Order Fetch Ho**
+      if (data.countdown === 0) {
+     
+        fetchOrders(); 
+      }
+  } catch (error) {
+    console.error("Error fetching timer:", error);
+  }
+};
 
-  fetchOrders();
+// useEffect(() => {
+//   fetchOrders(); // Initial fetch
+//   const orderInterval = setInterval(fetchOrders, 6000);
+//   return () => clearInterval(orderInterval);
+// }, []);
+
+// ✅ **Har second timer update ho**
+
+useEffect(() => {
+  fetchTimer();
+  fetchOrders()
+
+  const interval = setInterval(fetchTimer, 1000);
+  return () => clearInterval(interval);
 }, []);
+
 
   const buttons = [
     { label: "Big", price: 1.95 },
@@ -214,39 +215,39 @@ useEffect(() => {
   
     // Function to add a new random order every minute
    
-    const addRandomAd = async () => {
-      const newOrder = createRandomOrder(orders.length);
+    // const addRandomAd = async () => {
+    //   const newOrder = createRandomOrder(orders.length);
     
-      try {
-        const response = await fetch("https://tradingbackend-production.up.railway.app/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newOrder),
-        });
+    //   try {
+    //     const response = await fetch("https://tradingbackend-production.up.railway.app/api/orders", {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify(newOrder),
+    //     });
     
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Order added to MongoDB:", data);
+    //     if (response.ok) {
+    //       const data = await response.json();
+    //       console.log("Order added to MongoDB:", data);
     
-          // Frontend state update
-          setOrders((prevOrders) => [data.order, ...prevOrders]);
-        } else {
-          console.error("Failed to add order");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
+    //       // Frontend state update
+    //       setOrders((prevOrders) => [data.order, ...prevOrders]);
+    //     } else {
+    //       console.error("Failed to add order");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //   }
+    // };
     
     
-       // Start the interval timer
-       const startTimer = () => {
-        if (!intervalRef.current) {
-          intervalRef.current = setInterval(() => {
-            addRandomAd();
-          },6000); // Generate one ad every minute
-        }
-      };
+      //  // Start the interval timer
+      //  const startTimer = () => {
+      //   if (!intervalRef.current) {
+      //     intervalRef.current = setInterval(() => {
+      //       addRandomAd();
+      //     },6000); // Generate one ad every minute
+      //   }
+      // };
   
       useEffect(() => {
    
@@ -258,7 +259,7 @@ useEffect(() => {
          setProfit(storedProfit);
          setLoss(storedLoss);
      
-         startTimer();
+        //  startTimer();
      
          return () => {
            if (intervalRef.current) {
