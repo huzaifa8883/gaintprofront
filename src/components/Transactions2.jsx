@@ -293,7 +293,7 @@ useEffect(() => {
         // const token = localStorage.getItem("token"); // Replace with your token storage method
         
         // Make the request with the token
-        const response = await axios.get("https://tradingbackend-production.up.railway.app/api/auth/userdeposit", {
+        const response = await axios.get("https://casino2-production.up.railway.app/api/auth/userdeposit", {
          
           withCredentials: true, 
         });
@@ -375,7 +375,7 @@ useEffect(() => {
       console.log(userId); // Ensure this is the correct userId from storage or session
     
       await axios.post(
-        "https://tradingbackend-production.up.railway.app/api/auth/updateDeposit",
+        "https://casino2-production.up.railway.app/api/auth/updateDeposit",
         {
           userId: userId, // Pass the correct user ID here
           currency: currency,
