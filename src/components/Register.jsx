@@ -25,7 +25,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        'https://tradingbackend-production.up.railway.app/api/auth/signup',
+        'https://casino2-production.up.railway.app/api/auth/signup',
         formData,
         {
           withCredentials: true,
