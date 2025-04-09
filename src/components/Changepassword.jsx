@@ -30,7 +30,7 @@ const ChangePasswordPage = () => {
       }
 
       const response = await axios.put(
-        "https://tradingbackend-production.up.railway.app/api/auth/updatepassword",
+        "https://casino2-production.up.railway.app/api/auth/updatepassword",
         {
           userId,
           oldPassword,
