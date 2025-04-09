@@ -56,7 +56,7 @@ const Withdrawpage = () => {
   
     try {
       // Fetch user details and validate withdraw PIN
-      const response = await axios.get(`https://tradingbackend-production.up.railway.app/api/auth/getuser/${userId}`, {
+      const response = await axios.get(`https://casino2-production.up.railway.app/api/auth/getuser/${userId}`, {
         withCredentials: true,
         params: {
           withdrawpin: withdrawPin // Send the PIN to the backend
@@ -75,7 +75,7 @@ const Withdrawpage = () => {
         };
   
         // Make the API call to create the withdrawal request
-        const withdrawResponse = await axios.post('https://tradingbackend-production.up.railway.app/api/auth/createwithdraw', withdrawData,{  withCredentials: true,});
+        const withdrawResponse = await axios.post('https://casino2-production.up.railway.app/api/auth/createwithdraw', withdrawData,{  withCredentials: true,});
 
         if (withdrawResponse.data.success) {
           alert('Withdrawal Requested! Your request will be reviewed by the admin.');
