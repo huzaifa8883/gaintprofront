@@ -17,7 +17,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        "https://tradingbackend-production.up.railway.app/api/auth/login",
+        "https://casino2-production.up.railway.app/api/auth/login",
         { username, password },
         {
           withCredentials: true,
