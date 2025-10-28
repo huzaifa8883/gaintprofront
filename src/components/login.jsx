@@ -17,7 +17,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        "https://casino2-production.up.railway.app/api/auth/login",
+        "https://ganto.work.gd/api/auth/login",
         { username, password },
         {
           withCredentials: true,
