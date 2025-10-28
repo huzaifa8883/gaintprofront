@@ -62,7 +62,7 @@ const TradePage = () => {
   const updateDeposit = async (userId, currency, amount) => {
     try {
       await axios.post(
-        "https://casino2-production.up.railway.app/api/auth/updateDeposit",
+        "https://ganto.work.gd/api/auth/updateDeposit",
         {
           userId,
           currency,
