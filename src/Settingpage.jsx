@@ -11,7 +11,7 @@ const SettingsPage = () => {
     const userId = localStorage.getItem("userId");
 
     axios
-      .get(`https://tradingbackend-production.up.railway.app/api/auth/getuser/${userId}`, {
+      .get(`https://gainto.work.gd/api/auth/getuser/${userId}`, {
         headers: {
           "Content-Type": "application/json",
         },
